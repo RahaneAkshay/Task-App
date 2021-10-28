@@ -1,15 +1,45 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUser = void 0;
+exports.deleteUser = exports.updateUser = exports.readUser = exports.createUser = void 0;
 const logging_1 = require("../config/logging");
-const NAMESPACE = 'USER CONTROLLER';
+const NAMESPACE = "USER CONTROLLER";
 const createUser = (req, res) => {
     try {
         res.status(200).send({ message: "User created successfull" });
-        logging_1.logging.info(NAMESPACE, 'User Created');
+        logging_1.logging.info(NAMESPACE, "User Created");
     }
     catch (e) {
-        logging_1.logging.warn(NAMESPACE, 'error while creating user', e);
+        logging_1.logging.warn(NAMESPACE, "error while creating user", e);
     }
 };
 exports.createUser = createUser;
+const readUser = (req, res) => {
+    try {
+        res.status(200).send({ message: "User created successfull" });
+        logging_1.logging.info(NAMESPACE, "User Created");
+    }
+    catch (e) {
+        logging_1.logging.warn(NAMESPACE, "error while creating user", e);
+    }
+};
+exports.readUser = readUser;
+const updateUser = (req, res) => {
+    try {
+        res.status(200).send({ message: "User created successfull" });
+        logging_1.logging.info(NAMESPACE, "User Created");
+    }
+    catch (e) {
+        logging_1.logging.warn(NAMESPACE, "error while creating user", e);
+    }
+};
+exports.updateUser = updateUser;
+const deleteUser = (req, res) => {
+    try {
+        res.status(200).send({ message: "User created successfull" });
+        logging_1.logging.info(NAMESPACE, "User Created");
+    }
+    catch (e) {
+        logging_1.logging.warn(NAMESPACE, "error while creating user", e);
+    }
+};
+exports.deleteUser = deleteUser;

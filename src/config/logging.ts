@@ -24,19 +24,19 @@ const warn = (namespace: string, message: string, object?: any): void => {
   }
 };
 
-const debug = (namespace: string, message: string, object?: any): void => {
+const error = (namespace: string, message: string, object?: any): void => {
   if (object) {
-    console.warn(
+    console.error(
       `[${getTimeStamp()}] [debug] [${namespace}] ${message}`,
       object
     );
   } else {
-    console.warn(`[${getTimeStamp()}] [debug] [${namespace}] ${message}`);
+    console.error(`[${getTimeStamp()}] [debug] [${namespace}] ${message}`);
   }
 };
 
 export const logging = {
   info,
   warn,
-  debug,
+  error,
 };

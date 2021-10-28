@@ -20,16 +20,16 @@ const warn = (namespace, message, object) => {
         console.warn(`[${getTimeStamp()}] [warn] [${namespace}] ${message}`);
     }
 };
-const debug = (namespace, message, object) => {
+const error = (namespace, message, object) => {
     if (object) {
-        console.warn(`[${getTimeStamp()}] [debug] [${namespace}] ${message}`, object);
+        console.error(`[${getTimeStamp()}] [debug] [${namespace}] ${message}`, object);
     }
     else {
-        console.warn(`[${getTimeStamp()}] [debug] [${namespace}] ${message}`);
+        console.error(`[${getTimeStamp()}] [debug] [${namespace}] ${message}`);
     }
 };
 exports.logging = {
     info,
     warn,
-    debug,
+    error,
 };
