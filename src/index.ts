@@ -3,8 +3,10 @@ import  {config } from './config/config';
 import {logging} from './config/logging'
 import { user } from './routes/user.routes';
 import mongoose  from 'mongoose';
+
 const app = express();
 const NAMESPACE = "index.ts"
+
 app.use(express.json())
 app.use('/user',user);
 
