@@ -25,14 +25,18 @@ const warn = (namespace: string, message: string, object?: any): void => {
 };
 
 const debug = (namespace: string, message: string, object?: any): void => {
-    if (object) {
-      console.warn(
-        `[${getTimeStamp()}] [debug] [${namespace}] ${message}`,
-        object
-      );
-    } else {
-      console.warn(`[${getTimeStamp()}] [debug] [${namespace}] ${message}`);
-    }
-  };
+  if (object) {
+    console.warn(
+      `[${getTimeStamp()}] [debug] [${namespace}] ${message}`,
+      object
+    );
+  } else {
+    console.warn(`[${getTimeStamp()}] [debug] [${namespace}] ${message}`);
+  }
+};
 
-
+export const logging = {
+  info,
+  warn,
+  debug,
+};
