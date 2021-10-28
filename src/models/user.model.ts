@@ -8,7 +8,7 @@ interface User{
 }
 
 const schema = new Schema<User>({
-    email:{type:String},
+    email:{type:String,unique:true},
     password:{type:String}
 })
 
