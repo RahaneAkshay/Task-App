@@ -7,6 +7,7 @@ exports.loginUser = exports.deleteUser = exports.updateUser = exports.readUser =
 const logging_1 = require("../config/logging");
 const user_model_1 = __importDefault(require("../models/user.model"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
+const jwt_utils_1 = require("../utils/jwt.utils");
 const NAMESPACE = "USER CONTROLLER";
 const loginUser = async (req, res) => {
     try {
@@ -14,8 +15,9 @@ const loginUser = async (req, res) => {
         if (result) {
             const isValid = await bcrypt_1.default.compare(req.body.password, result.password);
             if (isValid) {
+                const token = await jwt_utils_1.generateToken(result._id);
                 logging_1.logging.info(NAMESPACE, "User Logged in succesfully!");
-                res.status(200).send({ message: "User Logged in succesfully!" });
+                res.status(200).send({ message: "User Logged in succesfully!", token });
             }
             else {
                 res.status(400).send({ message: "Please enter the valid password" });
@@ -35,6 +37,7 @@ const createUser = async (req, res) => {
     try {
         req.body.password = await bcrypt_1.default.hash(req.body.password, 8);
         const result = await user_model_1.default.insertMany([req.body]);
+        const token = await jwt_utils_1.generateToken(result[0]._id);
         res.status(200).send(result);
         logging_1.logging.info(NAMESPACE, "User Created");
     }

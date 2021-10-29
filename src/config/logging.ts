@@ -13,16 +13,7 @@ const info = (namespace: string, message: string, object?: any): void => {
   }
 };
 
-const warn = (namespace: string, message: string, object?: any): void => {
-  if (object) {
-    console.warn(
-      `[${getTimeStamp()}] [warn] [${namespace}] ${message}`,
-      object
-    );
-  } else {
-    console.warn(`[${getTimeStamp()}] [warn] [${namespace}] ${message}`);
-  }
-};
+
 
 const error = (namespace: string, message: string, object?: any): void => {
   if (object) {
@@ -37,6 +28,5 @@ const error = (namespace: string, message: string, object?: any): void => {
 
 export const logging = {
   info,
-  warn,
   error,
 };

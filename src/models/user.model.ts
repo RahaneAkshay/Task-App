@@ -1,16 +1,18 @@
-import { Schema,model } from "mongoose";
+import { Schema, model } from "mongoose";
 import { NextFunction } from "express";
-import bycrypt from 'bcrypt'
+import bycrypt from "bcrypt";
 
-interface User{
-    email:string,
-    password:string
+interface User {
+  email: string;
+  password: string;
+  token: any;
 }
 
 const schema = new Schema<User>({
-    email:{type:String,unique:true},
-    password:{type:String}
-})
+  email: { type: String, unique: true },
+  password: { type: String },
+  token: {type:String},
+});
 
 // schema.pre('save',async function(next) {
 //     const user = this
@@ -20,5 +22,5 @@ const schema = new Schema<User>({
 //     next()
 // })
 
-const UserModel = model<User>('user', schema);
+const UserModel = model<User>("user", schema);
 export default UserModel;

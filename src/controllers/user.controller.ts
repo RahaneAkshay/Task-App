@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { logging } from "../config/logging";
 import UserModel from "../models/user.model";
 import bycrypt from "bcrypt";
+import { generateToken } from "../utils/jwt.utils";
 
 const NAMESPACE: string = "USER CONTROLLER";
 
@@ -9,11 +10,15 @@ const loginUser = async (req: Request, res: Response) => {
   try {
     const result = await UserModel.findOne({ email: req.body.email });
     if (result) {
-      
-       const isValid:boolean = await bycrypt.compare(req.body.password,result.password)
+      const isValid: boolean = await bycrypt.compare(
+        req.body.password,
+        result.password
+      );
       if (isValid) {
+        const token = await generateToken(result._id);
+        
         logging.info(NAMESPACE, "User Logged in succesfully!");
-        res.status(200).send({ message: "User Logged in succesfully!" });
+        res.status(200).send({ message: "User Logged in succesfully!", token });
       } else {
         res.status(400).send({ message: "Please enter the valid password" });
         logging.error(NAMESPACE, "Please enter the valid password");
@@ -30,6 +35,7 @@ const createUser = async (req: Request, res: Response) => {
   try {
     req.body.password = await bycrypt.hash(req.body.password, 8);
     const result = await UserModel.insertMany([req.body]);
+    const token = await generateToken(result[0]._id);
     res.status(200).send(result);
     logging.info(NAMESPACE, "User Created");
   } catch (e) {
