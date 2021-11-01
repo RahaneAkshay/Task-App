@@ -10,17 +10,17 @@ const user_routes_1 = require("./routes/user.routes");
 const task_routes_1 = require("./routes/task.routes");
 const mongoose_1 = __importDefault(require("mongoose"));
 const app = express_1.default();
-const NAMESPACE = "index.ts";
+const NAMESPACE = "Index";
 app.use(express_1.default.json());
-app.use('/user', user_routes_1.user);
-app.use('/task', task_routes_1.task);
+app.use("/user", user_routes_1.user);
+app.use("/task", task_routes_1.task);
 (async () => {
     try {
         await mongoose_1.default.connect(config_1.config.database.url);
-        logging_1.logging.info(NAMESPACE, 'Connection sucessfull');
+        logging_1.logging.info(NAMESPACE, "Connection sucessfull");
     }
     catch (e) {
-        logging_1.logging.error(NAMESPACE, 'database connection error', e);
+        logging_1.logging.error(NAMESPACE, "Database connection error", e);
     }
 })();
 app.listen(config_1.config.server.port, () => {

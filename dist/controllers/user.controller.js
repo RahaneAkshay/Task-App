@@ -3,12 +3,27 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.loginUser = exports.deleteUser = exports.updateUser = exports.readUser = exports.createUser = void 0;
+exports.uploadFile = exports.loginUser = exports.deleteUser = exports.updateUser = exports.readUser = exports.createUser = void 0;
 const logging_1 = require("../config/logging");
 const user_model_1 = __importDefault(require("../models/user.model"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
 const jwt_utils_1 = require("../utils/jwt.utils");
 const NAMESPACE = "USER CONTROLLER";
+const uploadFile = async (req, res) => {
+    try {
+        const options = {
+            new: true,
+            runValidators: true,
+        };
+        const profilePic = req.file?.buffer;
+        const result = await user_model_1.default.findByIdAndUpdate(req.params.id, { profilePic }, options);
+        res.status(201).send(result);
+    }
+    catch (e) {
+        res.status(400).send({ message: "File upload fail" });
+    }
+};
+exports.uploadFile = uploadFile;
 const loginUser = async (req, res) => {
     try {
         const result = await user_model_1.default.findOne({ email: req.body.email });
@@ -38,7 +53,7 @@ const createUser = async (req, res) => {
         req.body.password = await bcrypt_1.default.hash(req.body.password, 8);
         const result = await user_model_1.default.insertMany([req.body]);
         const token = await jwt_utils_1.generateToken(result[0]._id);
-        res.status(200).send(result);
+        res.status(200).send({ result, token });
         logging_1.logging.info(NAMESPACE, "User Created");
     }
     catch (e) {

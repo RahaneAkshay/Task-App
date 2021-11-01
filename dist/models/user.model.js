@@ -5,6 +5,12 @@ const schema = new mongoose_1.Schema({
     email: { type: String, unique: true },
     password: { type: String },
     token: { type: String },
+    profilePic: {
+        data: Buffer,
+        contentType: String
+    }
+}, {
+    timestamps: true
 });
 // schema.pre('save',async function(next) {
 //     const user = this

@@ -3,8 +3,28 @@ import { logging } from "../config/logging";
 import UserModel from "../models/user.model";
 import bycrypt from "bcrypt";
 import { generateToken } from "../utils/jwt.utils";
-
+import multer from "multer";
 const NAMESPACE: string = "USER CONTROLLER";
+
+const uploadFile = async (req: Request, res: Response) => {
+try{
+  const options = {
+    new: true,
+    runValidators: true,
+  };
+  const profilePic = req.file?.buffer!
+  const result = await UserModel.findByIdAndUpdate(
+    req.params.id,
+    {profilePic},
+    options
+  );
+  res.status(201).send(result)
+}catch(e){
+
+  res.status(400).send({ message: "File upload fail" });
+   
+}
+}
 
 const loginUser = async (req: Request, res: Response) => {
   try {
@@ -16,7 +36,7 @@ const loginUser = async (req: Request, res: Response) => {
       );
       if (isValid) {
         const token = await generateToken(result._id);
-        
+
         logging.info(NAMESPACE, "User Logged in succesfully!");
         res.status(200).send({ message: "User Logged in succesfully!", token });
       } else {
@@ -36,7 +56,7 @@ const createUser = async (req: Request, res: Response) => {
     req.body.password = await bycrypt.hash(req.body.password, 8);
     const result = await UserModel.insertMany([req.body]);
     const token = await generateToken(result[0]._id);
-    res.status(200).send(result);
+    res.status(200).send({ result, token });
     logging.info(NAMESPACE, "User Created");
   } catch (e) {
     res.status(400).send(e);
@@ -84,4 +104,4 @@ const deleteUser = async (req: Request, res: Response) => {
   }
 };
 
-export { createUser, readUser, updateUser, deleteUser, loginUser };
+export { createUser, readUser, updateUser, deleteUser, loginUser, uploadFile };

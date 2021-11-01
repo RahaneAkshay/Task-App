@@ -6,7 +6,17 @@ const task_model_1 = require("../models/task.model");
 const NAMESPACE = "Task Controller";
 const fetchTasks = async (req, res) => {
     try {
-        const result = await task_model_1.TaskModel.find();
+        const completed = req.query.completed;
+        console.log(completed);
+        let result = [];
+        if (completed) {
+            result = await task_model_1.TaskModel.find({
+                completed: completed,
+            }, { skip: 0, limit: 2 });
+        }
+        else {
+            result = await task_model_1.TaskModel.find();
+        }
         res.status(200).send(result);
         logging_1.logging.info(NAMESPACE, " Data send to user");
     }
