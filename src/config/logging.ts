@@ -13,8 +13,6 @@ const info = (namespace: string, message: string, object?: any): void => {
   }
 };
 
-
-
 const error = (namespace: string, message: string, object?: any): void => {
   if (object) {
     console.error(

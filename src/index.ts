@@ -5,7 +5,7 @@ import { user } from "./routes/user.routes";
 import { task } from "./routes/task.routes";
 import mongoose from "mongoose";
 
-const app = express();
+export const app = express();
 const NAMESPACE = "Index";
 
 app.use(express.json());

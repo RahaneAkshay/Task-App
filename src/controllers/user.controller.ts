@@ -7,24 +7,22 @@ import multer from "multer";
 const NAMESPACE: string = "USER CONTROLLER";
 
 const uploadFile = async (req: Request, res: Response) => {
-try{
-  const options = {
-    new: true,
-    runValidators: true,
-  };
-  const profilePic = req.file?.buffer!
-  const result = await UserModel.findByIdAndUpdate(
-    req.params.id,
-    {profilePic},
-    options
-  );
-  res.status(201).send(result)
-}catch(e){
-
-  res.status(400).send({ message: "File upload fail" });
-   
-}
-}
+  try {
+    const options = {
+      new: true,
+      runValidators: true,
+    };
+    const profilePic = req.file?.buffer!;
+    const result = await UserModel.findByIdAndUpdate(
+      req.params.id,
+      { profilePic },
+      options
+    );
+    res.status(201).send(result);
+  } catch (e) {
+    res.status(400).send({ message: "File upload fail" });
+  }
+};
 
 const loginUser = async (req: Request, res: Response) => {
   try {
